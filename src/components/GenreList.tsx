@@ -14,8 +14,9 @@ import GenreListSkeleton from "./GenreListSkeleton";
 
 interface IProps {
   handleClick: (g: Genre) => void;
+  selectedGenre: Genre | null;
 }
-const GenreList = ({ handleClick }: IProps) => {
+const GenreList = ({ handleClick, selectedGenre }: IProps) => {
   const { data, isLoading } = useGenre();
   const c = 20;
   if (isLoading)
@@ -33,7 +34,12 @@ const GenreList = ({ handleClick }: IProps) => {
               borderRadius={8}
               src={getCroppedImageUrl(g.image_background)}
             ></Image>
-            <Button fontSize="lg" variant="link" onClick={() => handleClick(g)}>
+            <Button
+              fontWeight={g.id == selectedGenre?.id ? "bold" : "light"}
+              fontSize="lg"
+              variant="link"
+              onClick={() => handleClick(g)}
+            >
               {g.name}
             </Button>
           </HStack>
