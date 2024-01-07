@@ -1,10 +1,21 @@
-import { HStack, Image, List, ListItem, Spinner, Text } from "@chakra-ui/react";
-import useGenre from "../hooks/useGenre";
+import {
+  Button,
+  HStack,
+  Image,
+  List,
+  ListItem,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
+import useGenre, { Genre } from "../hooks/useGenre";
 import getCroppedImageUrl from "../Services/image-url";
 import GameCardSkeleton from "./GameCardSkeleton";
 import GenreListSkeleton from "./GenreListSkeleton";
 
-const GenreList = () => {
+interface IProps {
+  handleClick: (g: Genre) => void;
+}
+const GenreList = ({ handleClick }: IProps) => {
   const { data, isLoading } = useGenre();
   const c = 20;
   if (isLoading)
@@ -22,7 +33,9 @@ const GenreList = () => {
               borderRadius={8}
               src={getCroppedImageUrl(g.image_background)}
             ></Image>
-            <Text fontSize="lg">{g.name}</Text>
+            <Button fontSize="lg" variant="link" onClick={() => handleClick(g)}>
+              {g.name}
+            </Button>
           </HStack>
         </ListItem>
       ))}
